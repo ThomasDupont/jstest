@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>UnitTest</title>
+    <meta charset="UTF-8">
+<head>
+<body>
+    <script src="../jstest.min.js"></script>
+    <script>
+
+    var testObject1 = new JsTest();
+    testObject1.launchTest(
+        {
+            test1 : function() {
+                console.log("hello world");
+            },
+            test2 : function() {
+                console.log('all right');
+            }
+        }
+    );
+
+    var testObject2 = new JsTest('string');// invalid parameter Exception
+    var testObject3 = new JsTest('1000');//valid
+
+    testObject3.launchTest(
+        {
+            test1 : function() {
+                console.log("hello world");
+            },
+            test2 : function() {
+                console.log('all right');
+            }
+        }
+    );
+
+    var testObject4 = new JsTest(1000);// valid
+
+    testObject4.launchTest({});// valid
+    testObject4.launchTest('salut');// invalid object Exception
+    testObject4.launchTest(false);// invalid object Exception
+
+    </script>
+</body>
+</html>
