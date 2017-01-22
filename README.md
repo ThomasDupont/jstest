@@ -40,7 +40,7 @@ test.launchTest(
 
 
 ## Test and example
-<a href="https://github.com/setni/jstest/test">Some test and example</a>
+<a href="https://github.com/setni/jstest/tree/master/test">Some test and example</a>
 
 ## Bugs
 If you find a bug, please post it as a new issue on the GitHub repository with <a https://github.com/setni/Angular.js-project/issues">this information in your report</a>.
