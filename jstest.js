@@ -8,52 +8,130 @@
 "use strict";
 
 /**
-* @param int t time out between each test
+* @param {int} t time out between each test
 */
-var JsTest = function(t = 500) {
+var JsTest = function(jQuery)
+{
+    //Old browsers
+    jQuery = jQuery !== false ;
 
-    this.timer = 0;
-    this.timerSet = parseInt(t);
+    this.$ = {};
 
-    this.init = function () {
-        if(isNaN(this.timerSet)) {
-            throw "The timerSet parameter is not a valid number "+this.timerSet+" given";
-        } else {
-            if (typeof window.jQuery === 'undefined') {
-                var script = document.createElement("SCRIPT");
-                script.src = '//ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js';
-                script.type = 'text/javascript';
-                document.getElementsByTagName("head")[0].appendChild(script);
-                var _this = this;
-                if (script.readyState){  //IE
-                    script.onreadystatechange = function(){
-                        if (script.readyState == "loaded" ||
-                            script.readyState == "complete"){
-                                script.onreadystatechange = null;
-                                _this.$ = window.jQuery;
-                        }
-                    };
-                } else {  //Others
-                    script.onload = function(){
-                        _this.$ = window.jQuery;
-                    };
-                }
-            } else {
-                this.$ = window.jQuery;
+    var params = {
+        timer   : 0,
+        timerSet: 500,
+        timeOut : {}
+    }
+
+    /**
+    * @function {constructor} void
+    */
+    this.init = function (jQuery)
+    {
+        if(typeof jQuery !== "boolean") {
+
+            throw "The jQuery usage parameter must be a boolean, "+ typeof jQuery +" given";
+
+        } else if (typeof window.jQuery === 'undefined' && jQuery) {
+
+            var _this = this;
+            var script = document.createElement("SCRIPT");
+            script.src = '//ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js';
+            script.type = 'text/javascript';
+            document.getElementsByTagName("head")[0].appendChild(script);
+
+            if (script.readyState){  //IE
+
+                script.onreadystatechange = function()
+                {
+                    if (script.readyState == "loaded" ||
+                        script.readyState == "complete"){
+                            script.onreadystatechange = null;
+                            _this.$ = window.jQuery;
+                    }
+                };
+
+            } else {  //Others
+
+                script.onload = function()
+                {
+                    _this.$ = window.jQuery;
+                };
+
             }
+
+        } else if (!jQuery) {
+
+            this.$ = {};
+
+        } else {
+
+            this.$ = window.jQuery;
+
         }
     };
-    this.launchTest = function (jobject) {
+
+    /**
+    * @function {public} void
+    * @param {int} t timer, timer in milliseconds
+    */
+    this.setTimer = function(t)
+    {
+        var i = parseInt(t);
+        if(isNaN(i)) {
+
+            throw "The timerSet parameter is not a valid number "+i+" given";
+
+        } else {
+
+            params.timerSet = i;
+
+        }
+    };
+
+    /**
+    * @function {public} int
+    * @return {int} the current timer
+    */
+    this.getTimer = function()
+    {
+        return params.timerSet;
+    };
+
+    /**
+    * @function {public} void
+    * @param {object} jobject, list of all test you need to launch
+    */
+    this.launchTest = function (jobject)
+    {
         if(typeof jobject !== 'object') {
-            throw "The test is not an object parameter";
+
+            throw "The parameter send for the test is not an object";
+
         }
         for(var i in jobject) {
-            this.timeOut(jobject[i]);
+
+            params.timeOut(jobject[i]);
+
         }
     };
-    this.timeOut = function (callback) {
-        this.timer += this.timerSet;
-        setTimeout(function () {callback();}, this.timer);
+
+    /**
+    * @function {private} void
+    * @param {object} callback, single instruction
+    * {breadcrumb} launchTest->timeOut
+    */
+    params.timeOut = function (callback)
+    {
+        params.timer += params.timerSet;
+        setTimeout(
+            function ()
+            {
+                callback();
+            },
+            params.timer
+        );
     };
-    this.init();
+
+    this.init(jQuery);
 }
