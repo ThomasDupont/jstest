@@ -15,16 +15,29 @@ var JsTest = function(jQuery)
     //Old browsers
     jQuery = jQuery !== false ;
 
+    /**
+    * @var {object} jQuery instance
+    */
     this.$ = {};
 
+    /**
+    * @var {object} private parameters
+    *      {int} timer, setTimeout parameter
+    *      {int} timerSet, Time in millisecond between each action
+    */
     var params = {
         timer   : 0,
-        timerSet: 500,
-        timeOut : {}
+        timerSet: 500
     }
 
     /**
+    * @var {object} all private methods
+    */
+    var privateM = {};
+
+    /**
     * @function {constructor} void
+    * @param {bool} jQuery usage
     */
     this.init = function (jQuery)
     {
@@ -72,24 +85,6 @@ var JsTest = function(jQuery)
     };
 
     /**
-    * @function {public} void
-    * @param {int} t timer, timer in milliseconds
-    */
-    this.setTimer = function(t)
-    {
-        var i = parseInt(t);
-        if(isNaN(i)) {
-
-            throw "The timerSet parameter is not a valid number "+i+" given";
-
-        } else {
-
-            params.timerSet = i;
-
-        }
-    };
-
-    /**
     * @function {public} int
     * @return {int} the current timer
     */
@@ -111,7 +106,25 @@ var JsTest = function(jQuery)
         }
         for(var i in jobject) {
 
-            params.timeOut(jobject[i]);
+            privateM.timeOut(jobject[i]);
+
+        }
+    };
+
+    /**
+    * @function {public} void
+    * @param {int} t timer, timer in milliseconds
+    */
+    this.setTimer = function(t)
+    {
+        var i = parseInt(t);
+        if(isNaN(i)) {
+
+            throw "The timerSet parameter is not a valid number "+i+" given";
+
+        } else {
+
+            params.timerSet = i;
 
         }
     };
@@ -121,7 +134,7 @@ var JsTest = function(jQuery)
     * @param {object} callback, single instruction
     * {breadcrumb} launchTest->timeOut
     */
-    params.timeOut = function (callback)
+    privateM.timeOut = function (callback)
     {
         params.timer += params.timerSet;
         setTimeout(
