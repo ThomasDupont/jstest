@@ -8,7 +8,7 @@
 "use strict";
 
 /**
-* @param {int} t time out between each test
+* @param {object} jQuery The instance of jQuery
 */
 var JsTest = function(jQuery)
 {
