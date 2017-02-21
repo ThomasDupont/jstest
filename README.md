@@ -4,7 +4,7 @@ jstest library
 **A Javascript library to help developper to test the javascript (including AJAX) of Their web application.**
 
 ## Documentation
-- Developer Docs: [https://github.com/setni/jstest/wiki](https://github.com/setni/jstest/wiki)
+- Developer Docs: [https://github.com/ThomasDupont/jstest/wiki](https://github.com/ThomasDupont/jstest/wiki)
 
 ## Current Release
 - <b>0.1.2</b> : Add exception if the launchTest parameter is not an object.
@@ -40,7 +40,7 @@ test.launchTest(
 
 
 ## Test and example
-<a href="https://github.com/setni/jstest/tree/master/test">Some test and example</a>
+<a href="https://github.com/ThomasDupont/jstest/tree/master/test">Some test and example</a>
 
 ## Bugs
 If you find a bug, please post it as a new issue on the GitHub repository with <a https://github.com/setni/Angular.js-project/issues">this information in your report</a>.
